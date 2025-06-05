@@ -1,142 +1,248 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diagnóstico Digital | Tullu Digital</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seu negócio está pronto para escalar?</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f4f4f4;
-      color: #333;
+    @font-face {
+      font-family: 'Acumin';
+      src: local('Acumin');
     }
-    .container {
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Acumin', sans-serif;
+      color: white;
+    }
+
+    body {
+      background: black;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    header img {
+      max-width: 100%;
+      height: auto;
+      width: clamp(100px, 20vw, 250px);
+    }
+
+    .background-gradient {
+      position: absolute;
+      width: 100%;
+      height: 50vh;
+      background: linear-gradient(to top, #0033bd 0%, transparent 100%);
+      animation: rise 4s ease forwards;
+      z-index: -1;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    main {
+      padding: 2rem;
       max-width: 600px;
       margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     h1 {
-      text-align: center;
-      color: #111;
-    }
-    label {
-      display: block;
-      margin-top: 20px;
+      font-size: 2rem;
+      margin-bottom: 2rem;
       font-weight: bold;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background-color: #000;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 20px;
-      font-size: 16px;
-    }
-    .result {
-      display: none;
-      margin-top: 30px;
-      padding: 20px;
-      background: #e9f6f3;
-      border-left: 5px solid #00b894;
-      border-radius: 5px;
-    }
-    .whatsapp {
-      display: none;
-      margin-top: 20px;
       text-align: center;
     }
-    .whatsapp a {
-      background-color: #25d366;
-      color: white;
-      padding: 12px 20px;
-      text-decoration: none;
-      border-radius: 5px;
+
+    .hidden {
+      display: none;
+    }
+
+    .question {
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .progress {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #001630;
+    }
+
+    .dot.active {
+      background-color: #02acfb;
+    }
+
+    .btn, .option {
       display: inline-block;
+      padding: 0.75rem 1.25rem;
+      margin: 0.5rem 0;
+      border: 3px solid #02acfc;
+      background: linear-gradient(to right, #001630, black);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: normal;
+    }
+
+    .btn:hover, .option:hover {
+      background: #02acfc;
+      border-color: black;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #001630;
+      border: 3px solid #02acfc;
+      color: white;
+      font-weight: normal;
+    }
+
+    .input-container input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: normal;
+    }
+
+    .result {
+      font-size: 1.25rem;
       font-weight: bold;
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      display: block;
+      background-color: #02acfb;
+      color: white;
+      font-weight: bold;
+      padding: 1rem;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 0 5px #000;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: white;
+      color: #02acfb;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .btn, .option {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Seu Negócio Está Pronto para Escalar?</h1>
-    <form id="diagnosticoForm">
-      <label>Qual é o seu nicho?</label>
-      <input type="text" name="nicho" required>
+  <div class="background-gradient"></div>
+  <header>
+    <img src="tullu.png" alt="Tullu logo">
+  </header>
+  <main>
+    <h1>Seu negócio está pronto para escalar? 🚀</h1>
+    <button id="startBtn" class="btn" onclick="startForm()">Começar</button>
 
-      <label>Quantos atendimentos mensais você faz?</label>
-      <select name="atendimentos">
-        <option value="baixo">Até 50</option>
-        <option value="medio">51 a 200</option>
-        <option value="alto">Mais de 200</option>
-      </select>
-
-      <label>Ticket médio dos seus produtos/serviços?</label>
-      <input type="text" name="ticket" required>
-
-      <label>Você já investe em tráfego pago?</label>
-      <select name="trafego">
-        <option value="nao">Não</option>
-        <option value="sim">Sim</option>
-        <option value="tentou">Tentei mas não deu certo</option>
-      </select>
-
-      <label>Você utiliza automações ou IA hoje?</label>
-      <select name="ia">
-        <option value="nao">Não</option>
-        <option value="pouco">Uso pouco</option>
-        <option value="sim">Sim, já uso bastante</option>
-      </select>
-
-      <button type="submit">Ver Diagnóstico</button>
-    </form>
-
-    <div class="result" id="resultado"></div>
-
-    <div class="whatsapp" id="whatsapp">
-      <a href="https://wa.me/5511999999999" target="_blank">Falar com a Tullu Digital no WhatsApp</a>
+    <div id="formContainer" class="hidden">
+      <div class="progress" id="progressDots"></div>
+      <div id="questionContainer"></div>
     </div>
-  </div>
 
+    <div id="resultContainer" class="hidden">
+      <div class="result" id="resultText">🎯 Você tem um enorme potencial para escalar! Veja como podemos te ajudar...</div>
+      <a href="https://shre.ink/Mz7C" target="_blank" class="cta-button">Quero vender mais</a>
+    </div>
+  </main>
   <script>
-    const form = document.getElementById('diagnosticoForm');
-    const resultado = document.getElementById('resultado');
-    const whatsapp = document.getElementById('whatsapp');
+    const questions = [
+      "Qual é o seu nicho?",
+      "Qual é a média de atendimentos por dia?",
+      "Qual é o seu faturamento médio mensal?",
+      "Qual é o ticket médio das suas vendas?",
+      "Quais são os principais problemas do seu negócio?",
+      "Você já usa inteligência artificial no seu negócio?",
+      "Se você dobrasse seus atendimentos, teria estrutura para isso?",
+      "Quais são suas maiores objeções para investir em tecnologia?",
+      "Você já investe em tráfego pago ou geração de leads?",
+      "Tem equipe suficiente para escalar seu atendimento?"
+    ];
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const ia = form.ia.value;
-      const atendimentos = form.atendimentos.value;
-      let mensagem = "";
+    let currentQuestion = 0;
+    const formContainer = document.getElementById('formContainer');
+    const questionContainer = document.getElementById('questionContainer');
+    const progressDots = document.getElementById('progressDots');
 
-      if (ia === "nao" && atendimentos !== "baixo") {
-        mensagem = "Seu negócio tem grande potencial, mas ainda está no manual. Com automações e IA no WhatsApp, você pode dobrar suas vendas sem aumentar a equipe.";
-      } else if (ia === "pouco") {
-        mensagem = "Você já deu o primeiro passo, mas ainda pode escalar muito mais com as ferramentas certas de IA.";
-      } else if (ia === "sim") {
-        mensagem = "Parabéns! Seu negócio está pronto para escalar. Agora é hora de intensificar os resultados com tráfego e inteligência digital.";
-      } else {
-        mensagem = "Você está deixando dinheiro na mesa. Automatizando seus atendimentos, você pode começar a escalar sem precisar contratar ninguém.";
+    function startForm() {
+      document.getElementById('startBtn').classList.add('hidden');
+      formContainer.classList.remove('hidden');
+      createDots();
+      showQuestion();
+    }
+
+    function createDots() {
+      progressDots.innerHTML = '';
+      for (let i = 0; i < questions.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        progressDots.appendChild(dot);
+      }
+    }
+
+    function showQuestion() {
+      questionContainer.innerHTML = '';
+      const dotList = document.querySelectorAll('.dot');
+      dotList.forEach((dot, i) => {
+        dot.classList.toggle('active', i <= currentQuestion);
+      });
+
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      let label = `<p><strong>${currentQuestion + 1}. ${questions[currentQuestion]}</strong></p>`;
+
+      if (currentQuestion >= 5) {
+        label = `<p><strong>Falta pouco...</strong></p>` + label;
       }
 
-      resultado.innerHTML = `<strong>Diagnóstico:</strong> <br>${mensagem}`;
-      resultado.style.display = 'block';
-      whatsapp.style.display = 'block';
-    });
+      const input = `<div class="input-container"><input type="text" placeholder="Digite aqui" onkeypress="if(event.key === 'Enter'){nextQuestion()}" /></div>`;
+
+      qDiv.innerHTML = label + input + `<button class="btn" onclick="nextQuestion()">Próximo</button>`;
+      questionContainer.appendChild(qDiv);
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        formContainer.classList.add('hidden');
+        document.getElementById('resultContainer').classList.remove('hidden');
+      }
+    }
   </script>
 </body>
 </html>
