@@ -1,217 +1,247 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulário Inteligente - Tullu Digital</title>
+  <title>Seu negócio está pronto para escalar?</title>
   <style>
-    body {
+    @font-face {
+      font-family: 'Acumin';
+      src: local('Acumin');
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      padding: 0;
+      font-family: 'Acumin', sans-serif;
       color: white;
+    }
+
+    body {
+      background: black;
+      overflow-x: hidden;
+    }
+
+    header {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      padding: 1rem;
     }
 
-    .form-container {
-      background: #0f172a;
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      max-width: 600px;
+    header img {
+      max-width: 100%;
+      height: auto;
+      width: clamp(100px, 20vw, 250px);
+    }
+
+    .background-gradient {
+      position: absolute;
       width: 100%;
+      height: 50vh;
+      background: linear-gradient(to top, #0033bd 0%, transparent 100%);
+      animation: rise 4s ease forwards;
+      z-index: -1;
     }
 
-    h2 {
+    @keyframes rise {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: bold;
       text-align: center;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+    }
+
+    .hidden {
+      display: none;
     }
 
     .question {
-      margin-bottom: 1.5rem;
-      transition: opacity 0.5s ease;
-    }
-
-    .question.hidden {
-      display: none;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 0.5rem;
-      font-size: 0.95rem;
-      border-radius: 8px;
-      border: none;
-      margin-top: 0.5rem;
-    }
-
-    input[type="text"]::placeholder,
-    input[type="number"]::placeholder {
-      font-size: 0.85rem;
-    }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 0.75rem;
-    }
-
-    button {
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      padding: 0.75rem;
-      font-size: 0.95rem;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #1d4ed8;
-    }
-
-    .result-container {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      background-color: #001630;
-      border-radius: 16px;
-      padding: 2rem;
-      margin-top: 2rem;
+      margin-bottom: 2rem;
+      opacity: 0;
       animation: fadeIn 1s ease forwards;
     }
 
     @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
+      to { opacity: 1; }
+    }
+
+    .progress {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #001630;
+    }
+
+    .dot.active {
+      background-color: #02acfb;
+    }
+
+    .btn, .option {
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
+      margin: 0.5rem 0;
+      border: 3px solid #02acfc;
+      background: linear-gradient(to right, #001630, black);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: normal;
+    }
+
+    .btn:hover, .option:hover {
+      background: #02acfc;
+      border-color: black;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #001630;
+      border: 3px solid #02acfc;
+      color: white;
+      font-weight: normal;
+    }
+
+    .input-container input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: normal;
+    }
+
+    .result {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      display: block;
+      background-color: #02acfb;
+      color: white;
+      font-weight: bold;
+      padding: 1rem;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 0 5px #000;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: white;
+      color: #02acfb;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
       }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
+      .btn, .option {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <div class="form-container" id="formulario">
-    <h2>🚀 Seu negócio tem potencial para escalar com tecnologia!</h2>
-    <div class="question" id="q2">
-      <label>2. Quantos atendimentos (leads) você recebe por dia?</label>
-      <div class="button-group">
-        <button onclick="nextQuestion('q2', 'q3')">Menos de 10</button>
-        <button onclick="nextQuestion('q2', 'q3')">De 10 a 20</button>
-        <button onclick="nextQuestion('q2', 'q3')">Mais de 20</button>
-      </div>
+  <div class="background-gradient"></div>
+  <header>
+    <img src="tullu.png" alt="Tullu logo">
+  </header>
+  <main>
+    <h1>Seu negócio está pronto para escalar? 🚀</h1>
+    <button id="startBtn" class="btn" onclick="startForm()">Começar</button>
+
+    <div id="formContainer" class="hidden">
+      <div class="progress" id="progressDots"></div>
+      <div id="questionContainer"></div>
     </div>
 
-    <div class="question hidden" id="q3">
-      <label>3. Quanto fatura por mês?</label>
-      <div class="button-group">
-        <button onclick="nextQuestion('q3', 'q4')">Até R$ 10.000</button>
-        <button onclick="nextQuestion('q3', 'q4')">De R$ 10.000 a R$ 20.000</button>
-        <button onclick="nextQuestion('q3', 'q4')">De R$ 20.000 a R$ 60.000</button>
-        <button onclick="nextQuestion('q3', 'q4')">De R$ 60.000 a R$ 100.000</button>
-        <button onclick="nextQuestion('q3', 'q4')">Mais de R$ 100.000</button>
-      </div>
+    <div id="resultContainer" class="hidden">
+      <div class="result" id="resultText">🎯 Você tem um enorme potencial para escalar! Veja como podemos te ajudar...</div>
+      <a href="https://shre.ink/Mz7C" target="_blank" class="cta-button">Quero vender mais</a>
     </div>
-
-    <div class="question hidden" id="q4">
-      <label>4. Qual é o segmento do seu negócio?</label>
-      <div class="button-group">
-        <button onclick="nextQuestion('q4', 'q5')">Moda & Vestuário</button>
-        <button onclick="nextQuestion('q4', 'q5')">Beleza & Estética</button>
-        <button onclick="nextQuestion('q4', 'q5')">Serviços Educacionais</button>
-        <button onclick="nextQuestion('q4', 'q5')">Imobiliária ou Alto Ticket</button>
-        <button onclick="nextQuestion('q4', 'q5')">Saúde ou Clínicas</button>
-        <button onclick="nextQuestion('q4', 'q5')">Outro tipo de negócio</button>
-      </div>
-    </div>
-
-    <div class="question hidden" id="q5">
-      <label>5. Qual o seu nome?</label>
-      <input type="text" id="nome" placeholder="Digite seu nome" oninput="validateText(this, 'q5', 'q6')" />
-    </div>
-
-    <div class="question hidden" id="q6">
-      <label>6. Você já utiliza algum tipo de automação de atendimento?</label>
-      <div class="button-group">
-        <button onclick="nextQuestion('q6', 'q7')">Sim</button>
-        <button onclick="nextQuestion('q6', 'q7')">Não</button>
-        <button onclick="nextQuestion('q6', 'q7')">Não sei o que é isso</button>
-      </div>
-    </div>
-
-    <div class="question hidden" id="q7">
-      <label>7. Já usa CRM para gerenciar seus leads?</label>
-      <div class="button-group">
-        <button onclick="nextQuestion('q7', 'q8')">Sim</button>
-        <button onclick="nextQuestion('q7', 'q8')">Não</button>
-        <button onclick="nextQuestion('q7', 'q8')">Não sei o que é isso</button>
-      </div>
-    </div>
-
-    <div class="question hidden" id="q8">
-      <label>8. Quantos leads você gera por mês?</label>
-      <div class="button-group">
-        <button onclick="nextQuestion('q8', 'q9')">De 1 a 20</button>
-        <button onclick="nextQuestion('q8', 'q9')">De 21 a 50</button>
-        <button onclick="nextQuestion('q8', 'q9')">De 51 a 100</button>
-        <button onclick="nextQuestion('q8', 'q9')">De 101 a 300</button>
-        <button onclick="nextQuestion('q8', 'q9')">De 301 a 1.000</button>
-        <button onclick="nextQuestion('q8', 'q9')">Mais de 1.000</button>
-      </div>
-    </div>
-
-    <div class="question hidden" id="q9">
-      <label>9. Você tem uma esteira de vendas estruturada?</label>
-      <div class="button-group">
-        <button onclick="nextQuestion('q9', 'q10')">Sim</button>
-        <button onclick="nextQuestion('q9', 'q10')">Não</button>
-        <button onclick="nextQuestion('q9', 'q10')">Não sei o que é isso</button>
-      </div>
-    </div>
-
-    <div class="question hidden" id="q10">
-      <label>10. Hoje você faz atendimento manual?</label>
-      <div class="button-group">
-        <button onclick="showResult()">Sim</button>
-        <button onclick="showResult()">Não</button>
-        <button onclick="showResult()">Sim, mas com auxílio de IA</button>
-      </div>
-    </div>
-
-    <div class="result-container" id="resultado">
-      <p>✅ Com seu volume de leads, você já pode automatizar até 100% do seu atendimento para até 50 atendimentos por dia e 80% para os que têm mais de 50 atendimentos por dia! Um chatbot super inteligente pode triplicar seu fechamento sem aumentar sua equipe.</p>
-      <p>Não só isso, nós vamos crescer suas vendas com captação de leads, estratégia digital, presença online e daremos autoridade à sua marca. Não somos apenas uma assessoria de publicidade — somos 360º. Este formulário, por exemplo, é uma estratégia que podemos aplicar no seu negócio!</p>
-      <p>Seu negócio ainda está no manual. Isso significa que você está perdendo oportunidades diariamente por falta de estrutura escalável. A boa notícia: com a Tullu Digital, você pode virar o jogo.</p>
-    </div>
-  </div>
-
+  </main>
   <script>
-    function nextQuestion(currentId, nextId) {
-      document.getElementById(currentId).classList.add("hidden");
-      document.getElementById(nextId).classList.remove("hidden");
+    const questions = [
+      "Qual é o seu nicho?",
+      "Qual é a média de atendimentos por dia?",
+      "Qual é o seu faturamento médio mensal?",
+      "Qual é o ticket médio das suas vendas?",
+      "Quais são os principais problemas do seu negócio?",
+      "Você já usa inteligência artificial no seu negócio?",
+      "Se você dobrasse seus atendimentos, teria estrutura para isso?",
+      "Quais são suas maiores objeções para investir em tecnologia?",
+      "Você já investe em tráfego pago ou geração de leads?",
+      "Tem equipe suficiente para escalar seu atendimento?"
+    ];
+
+    let currentQuestion = 0;
+    const formContainer = document.getElementById('formContainer');
+    const questionContainer = document.getElementById('questionContainer');
+    const progressDots = document.getElementById('progressDots');
+
+    function startForm() {
+      document.getElementById('startBtn').classList.add('hidden');
+      formContainer.classList.remove('hidden');
+      createDots();
+      showQuestion();
     }
 
-    function validateText(input, currentId, nextId) {
-      const value = input.value.trim();
-      if (/^[A-Za-zÀ-ÿ ]{2,}$/.test(value)) {
-        nextQuestion(currentId, nextId);
+    function createDots() {
+      progressDots.innerHTML = '';
+      for (let i = 0; i < questions.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        progressDots.appendChild(dot);
       }
     }
 
-    function showResult() {
-      document.getElementById("q10").classList.add("hidden");
-      document.getElementById("resultado").style.display = "flex";
+    function showQuestion() {
+      questionContainer.innerHTML = '';
+      const dotList = document.querySelectorAll('.dot');
+      dotList.forEach((dot, i) => {
+        dot.classList.toggle('active', i <= currentQuestion);
+      });
+
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      let label = `<p><strong>${currentQuestion + 1}. ${questions[currentQuestion]}</strong></p>`;
+
+      if (currentQuestion >= 5) {
+        label = `<p><strong>Falta pouco...</strong></p>` + label;
+      }
+
+      const input = `<div class="input-container"><input type="text" placeholder="Digite aqui" onkeypress="if(event.key === 'Enter'){nextQuestion()}" /></div>`;
+
+      qDiv.innerHTML = label + input + `<button class="btn" onclick="nextQuestion()">Próximo</button>`;
+      questionContainer.appendChild(qDiv);
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        formContainer.classList.add('hidden');
+        document.getElementById('resultContainer').classList.remove('hidden');
+      }
     }
   </script>
 </body>
