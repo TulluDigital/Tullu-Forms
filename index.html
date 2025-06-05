@@ -1,66 +1,82 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seu negócio está pronto para escalar?</title>
+  <title>Tullu Forms</title>
   <style>
-    @font-face {
-      font-family: 'Acumin';
-      src: local('Acumin');
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Acumin', sans-serif;
-      color: white;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Acumin+Pro:wght@400;700&display=swap');
 
     body {
-      background: black;
+      margin: 0;
+      font-family: 'Acumin Pro', sans-serif;
+      background-color: black;
+      color: white;
       overflow-x: hidden;
     }
 
     header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
+      text-align: center;
+      padding: 10px;
     }
 
-    header img {
-      max-width: 100%;
+    #logo {
+      width: 180px;
+      max-width: 60%;
       height: auto;
-      width: clamp(100px, 20vw, 250px);
     }
 
-    .background-gradient {
+    @media (min-width: 768px) {
+      #logo {
+        width: 250px;
+      }
+    }
+
+    .gradient-bg {
       position: absolute;
+      bottom: 0;
+      left: 0;
       width: 100%;
-      height: 50vh;
-      background: linear-gradient(to top, #0033bd 0%, transparent 100%);
-      animation: rise 4s ease forwards;
-      z-index: -1;
+      height: 50%;
+      background: linear-gradient(to top, #0033bd, transparent);
+      animation: gradientUp 4s ease-out forwards;
     }
 
-    @keyframes rise {
-      0% { transform: translateY(100%); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
+    @keyframes gradientUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     main {
-      padding: 2rem;
+      position: relative;
+      z-index: 1;
+      padding: 20px;
       max-width: 600px;
-      margin: auto;
+      margin: 0 auto;
+      text-align: center;
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
+      font-size: 2em;
       font-weight: bold;
-      text-align: center;
+    }
+
+    .start-btn, .option-btn, .whatsapp-btn {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: 3px solid #02acfc;
+      background: linear-gradient(to right, #001630, black);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .start-btn:hover, .option-btn:hover, .whatsapp-btn:hover {
+      background: #02acfc;
+      border-color: #001630;
     }
 
     .hidden {
@@ -68,180 +84,173 @@
     }
 
     .question {
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
+      animation: fadeIn 1s ease-in-out;
     }
 
     @keyframes fadeIn {
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .progress {
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #001630;
+      border: 3px solid #02acfc;
+      border-radius: 20px;
+      color: white;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: normal;
+    }
+
+    .progress-dots {
       display: flex;
       justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
+      margin: 20px 0;
+      gap: 5px;
     }
 
     .dot {
       width: 12px;
       height: 12px;
-      border-radius: 50%;
       background-color: #001630;
+      border-radius: 50%;
     }
 
     .dot.active {
       background-color: #02acfb;
     }
 
-    .btn, .option {
-      display: inline-block;
-      padding: 0.75rem 1.25rem;
-      margin: 0.5rem 0;
-      border: 3px solid #02acfc;
-      background: linear-gradient(to right, #001630, black);
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: normal;
-    }
-
-    .btn:hover, .option:hover {
-      background: #02acfc;
-      border-color: black;
-    }
-
-    .input-container input {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #001630;
-      border: 3px solid #02acfc;
-      color: white;
-      font-weight: normal;
-    }
-
-    .input-container input::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-      font-weight: normal;
-    }
-
-    .result {
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-    }
-
-    .cta-button {
-      display: block;
-      background-color: #02acfb;
-      color: white;
-      font-weight: bold;
-      padding: 1rem;
+    footer {
+      margin-top: 40px;
       text-align: center;
-      text-decoration: none;
-      box-shadow: 0 0 5px #000;
-      transition: all 0.3s ease;
-    }
-
-    .cta-button:hover {
-      background-color: white;
-      color: #02acfb;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      .btn, .option {
-        width: 100%;
-      }
+      font-size: 12px;
+      color: white;
+      opacity: 0.6;
     }
   </style>
 </head>
 <body>
-  <div class="background-gradient"></div>
+  <div class="gradient-bg"></div>
   <header>
-    <img src="tullu.png" alt="Tullu logo">
+    <img id="logo" src="tullu.png" alt="Tullu Logo" />
   </header>
   <main>
-    <h1>Seu negócio está pronto para escalar? 🚀</h1>
-    <button id="startBtn" class="btn" onclick="startForm()">Começar</button>
-
-    <div id="formContainer" class="hidden">
-      <div class="progress" id="progressDots"></div>
-      <div id="questionContainer"></div>
+    <div id="intro">
+      <h1>Seu negócio está pronto para escalar? 🚀</h1>
+      <button class="start-btn" onclick="startForm()">Começar</button>
     </div>
-
-    <div id="resultContainer" class="hidden">
-      <div class="result" id="resultText">🎯 Você tem um enorme potencial para escalar! Veja como podemos te ajudar...</div>
-      <a href="https://shre.ink/Mz7C" target="_blank" class="cta-button">Quero vender mais</a>
+    <div id="form-container" class="hidden">
+      <div class="progress-dots" id="dots"></div>
+      <div id="question-area"></div>
     </div>
   </main>
+  <footer>
+    All rights reserved to Tullu Digital — CNPJ 61.043.540.0001-47<br />
+    Esta página é segura e protegida.
+  </footer>
   <script>
     const questions = [
-      "Qual é o seu nicho?",
-      "Qual é a média de atendimentos por dia?",
-      "Qual é o seu faturamento médio mensal?",
-      "Qual é o ticket médio das suas vendas?",
-      "Quais são os principais problemas do seu negócio?",
-      "Você já usa inteligência artificial no seu negócio?",
-      "Se você dobrasse seus atendimentos, teria estrutura para isso?",
-      "Quais são suas maiores objeções para investir em tecnologia?",
-      "Você já investe em tráfego pago ou geração de leads?",
-      "Tem equipe suficiente para escalar seu atendimento?"
+      "Qual é o nicho do seu negócio?",
+      "Quantos atendimentos você realiza por dia, em média?",
+      "Qual é o faturamento mensal médio da sua empresa?",
+      "Qual é o ticket médio por venda?",
+      "Quais são os principais problemas que você enfrenta hoje?",
+      "Você utiliza inteligência artificial no seu negócio?",
+      "Você investe em geração de leads atualmente?",
+      "Quantas pessoas fazem parte do seu time de vendas ou atendimento?",
+      "Você já investiu em tráfego pago?",
+      "Se tivesse o dobro de atendimentos por dia, conseguiria atender todos com qualidade?"
     ];
 
-    let currentQuestion = 0;
-    const formContainer = document.getElementById('formContainer');
-    const questionContainer = document.getElementById('questionContainer');
-    const progressDots = document.getElementById('progressDots');
+    let current = 0;
+    const questionArea = document.getElementById("question-area");
+    const formContainer = document.getElementById("form-container");
+    const dots = document.getElementById("dots");
+    const answers = [];
 
     function startForm() {
-      document.getElementById('startBtn').classList.add('hidden');
-      formContainer.classList.remove('hidden');
-      createDots();
+      document.getElementById("intro").classList.add("hidden");
+      formContainer.classList.remove("hidden");
+      renderDots();
       showQuestion();
     }
 
-    function createDots() {
-      progressDots.innerHTML = '';
+    function renderDots() {
+      dots.innerHTML = "";
       for (let i = 0; i < questions.length; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'dot';
-        progressDots.appendChild(dot);
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+        if (i < current) dot.classList.add("active");
+        dots.appendChild(dot);
       }
     }
 
     function showQuestion() {
-      questionContainer.innerHTML = '';
-      const dotList = document.querySelectorAll('.dot');
-      dotList.forEach((dot, i) => {
-        dot.classList.toggle('active', i <= currentQuestion);
+      questionArea.innerHTML = "";
+      renderDots();
+
+      if (current >= questions.length) {
+        showResult();
+        return;
+      }
+
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("question");
+
+      if (current >= 5) {
+        const title = document.createElement("h2");
+        title.textContent = "Falta pouco... Está acabando...";
+        wrapper.appendChild(title);
+      }
+
+      const q = document.createElement("p");
+      q.innerHTML = `<strong>${current + 1}.</strong> <strong>${questions[current]}</strong>`;
+      wrapper.appendChild(q);
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Digite aqui";
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") next();
       });
 
-      const qDiv = document.createElement('div');
-      qDiv.className = 'question';
-      let label = `<p><strong>${currentQuestion + 1}. ${questions[currentQuestion]}</strong></p>`;
+      wrapper.appendChild(input);
+      const nextBtn = document.createElement("button");
+      nextBtn.textContent = "Próximo";
+      nextBtn.classList.add("option-btn");
+      nextBtn.onclick = next;
 
-      if (currentQuestion >= 5) {
-        label = `<p><strong>Falta pouco...</strong></p>` + label;
-      }
-
-      const input = `<div class="input-container"><input type="text" placeholder="Digite aqui" onkeypress="if(event.key === 'Enter'){nextQuestion()}" /></div>`;
-
-      qDiv.innerHTML = label + input + `<button class="btn" onclick="nextQuestion()">Próximo</button>`;
-      questionContainer.appendChild(qDiv);
+      wrapper.appendChild(nextBtn);
+      questionArea.appendChild(wrapper);
+      input.focus();
     }
 
-    function nextQuestion() {
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        showQuestion();
-      } else {
-        formContainer.classList.add('hidden');
-        document.getElementById('resultContainer').classList.remove('hidden');
-      }
+    function next() {
+      const input = document.querySelector("input[type=text]");
+      if (!input || input.value.trim() === "") return;
+      answers.push(input.value.trim());
+      current++;
+      showQuestion();
+    }
+
+    function showResult() {
+      questionArea.innerHTML = "";
+      const div = document.createElement("div");
+      div.classList.add("question");
+      div.innerHTML = `
+        <h2 style="font-size: 1.5em;"><strong>🚀 Seu negócio tem potencial para escalar com tecnologia!</strong></h2>
+        <p>Com base nas suas respostas, você pode otimizar ainda mais seus processos e aumentar suas vendas.</p>
+        <a href="https://shre.ink/Mz7C" target="_blank">
+          <button class="whatsapp-btn">Quero vender mais</button>
+        </a>
+      `;
+      questionArea.appendChild(div);
     }
   </script>
 </body>
