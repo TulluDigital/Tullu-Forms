@@ -3,205 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulário Interativo - Tullu Digital</title>
+  <title>Formulário Inteligente - Tullu Digital</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #020a18, #001630);
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
       color: white;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
       min-height: 100vh;
     }
 
-    #intro {
-      text-align: center;
-      margin-top: 15vh;
+    .form-container {
+      background: #0f172a;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
     }
 
-    #formContainer {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-      width: 100%;
-      max-width: 600px;
+    h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .question {
-      margin-bottom: 2rem;
-      width: 100%;
+      margin-bottom: 1.5rem;
+      transition: opacity 0.5s ease;
     }
 
-    .question h2 {
-      margin-bottom: 1rem;
+    .question.hidden {
+      display: none;
     }
 
     input[type="text"],
     input[type="number"] {
       width: 100%;
-      padding: 0.75rem;
+      padding: 0.5rem;
+      font-size: 0.95rem;
       border-radius: 8px;
       border: none;
-      font-size: 0.95rem;
+      margin-top: 0.5rem;
     }
 
-    input::placeholder {
-      font-size: 0.95rem;
+    input[type="text"]::placeholder,
+    input[type="number"]::placeholder {
+      font-size: 0.85rem;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
     }
 
     button {
-      background-color: #00bcd4;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
+      background-color: #2563eb;
       color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-
-    .option-button {
-      width: 100%;
+      border: none;
       padding: 0.75rem;
-      margin: 0.25rem 0;
-      background-color: #00324c;
-      border-radius: 8px;
-      border: none;
-      color: white;
-      text-align: left;
       font-size: 0.95rem;
-      cursor: pointer;
-    }
-
-    .option-button:hover {
-      background-color: #005f80;
-    }
-
-    .final-result, .result-box {
-      background-color: #001630;
       border-radius: 12px;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      opacity: 0;
-      transition: opacity 1s ease-in;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
-    .final-result.show, .result-box.show {
-      opacity: 1;
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    .result-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background-color: #001630;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 2rem;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
-  <div id="intro">
-    <h1>Descubra o potencial do seu atendimento com tecnologia</h1>
-    <button id="startButton" onclick="startForm()">Começar</button>
-  </div>
-
-  <div id="formContainer"></div>
-
-  <div id="rocketMessage" class="final-result">
+  <div class="form-container" id="formulario">
     <h2>🚀 Seu negócio tem potencial para escalar com tecnologia!</h2>
-  </div>
 
-  <div id="finalText" class="result-box"></div>
-
-  <script>
-    const perguntas = [
-      { pergunta: "Qual é o seu nome?", tipo: "text", validacao: /^[a-zA-Zà-ú ]{2,}$/i },
-      { pergunta: "Quantos atendimentos você faz por dia?", tipo: "opcoes", opcoes: ["Menos de 10", "De 10 a 20", "Mais de 20"] },
-      { pergunta: "Qual é a média de faturamento mensal do seu negócio?", tipo: "opcoes", opcoes: ["R$ 1 a 10 mil", "R$ 10 mil a 20 mil", "R$ 20 mil a 60 mil", "R$ 60 mil a 100 mil", "Acima de R$ 100 mil"] },
-      { pergunta: "Qual o seu segmento?", tipo: "opcoes", opcoes: ["Loja de roupas", "Salão de beleza", "Prestador de serviços", "Comércio local", "Infoprodutos / serviços online", "Imobiliária ou alto ticket"] },
-      { pergunta: "Qual é o seu Instagram comercial?", tipo: "text", validacao: /^[^\d\W][\w\.]{2,}$/i },
-      { pergunta: "Você usa WhatsApp Business?", tipo: "opcoes", opcoes: ["Sim", "Não", "Não sei o que é isso"] },
-      { pergunta: "Você já usa algum tipo de automação?", tipo: "opcoes", opcoes: ["Sim", "Não", "Não sei o que é isso"] },
-      { pergunta: "Quantos leads você gera por mês em média?", tipo: "opcoes", opcoes: ["1 a 10", "11 a 30", "31 a 50", "51 a 70", "71 a 100", "Mais de 100"] },
-      { pergunta: "Você possui um CRM para gerenciar seus leads?", tipo: "opcoes", opcoes: ["Sim", "Não", "Não sei o que é isso"] },
-      { pergunta: "Você faz campanhas de tráfego pago?", tipo: "opcoes", opcoes: ["Sim", "Não", "Sim, mas com auxílio de IA"] },
-    ];
-
-    let indice = 0;
-    const formContainer = document.getElementById("formContainer");
-
-    function startForm() {
-      document.getElementById("intro").style.display = "none";
-      formContainer.style.display = "flex";
-      showQuestion();
-    }
-
-    function showQuestion() {
-      formContainer.innerHTML = "";
-      const q = perguntas[indice];
-      const div = document.createElement("div");
-      div.className = "question";
-
-      const h2 = document.createElement("h2");
-      h2.textContent = q.pergunta;
-      div.appendChild(h2);
-
-      if (q.tipo === "opcoes") {
-        q.opcoes.forEach(op => {
-          const btn = document.createElement("button");
-          btn.className = "option-button";
-          btn.textContent = op;
-          btn.onclick = () => {
-            respostas.push(op);
-            nextQuestion();
-          };
-          div.appendChild(btn);
-        });
-      } else {
-        const input = document.createElement("input");
-        input.type = q.tipo === "text" ? "text" : "number";
-        input.placeholder = "Digite aqui...";
-        input.oninput = () => {
-          if (q.validacao && !q.validacao.test(input.value.trim())) {
-            input.setCustomValidity("Responda com informações completas e válidas");
-          } else {
-            input.setCustomValidity("");
-          }
-        };
-        div.appendChild(input);
-
-        const btn = document.createElement("button");
-        btn.textContent = "Próximo";
-        btn.onclick = () => {
-          if (!input.checkValidity()) {
-            input.reportValidity();
-            return;
-          }
-          respostas.push(input.value.trim());
-          nextQuestion();
-        };
-        div.appendChild(btn);
-      }
-
-      formContainer.appendChild(div);
-    }
-
-    const respostas = [];
-
-    function nextQuestion() {
-      indice++;
-      if (indice < perguntas.length) {
-        showQuestion();
-      } else {
-        showResults();
-      }
-    }
-
-    function showResults() {
-      document.getElementById("rocketMessage").classList.add("show");
-      const resultado = document.getElementById("finalText");
-      resultado.classList.add("show");
-      resultado.innerHTML = `
-        <p>✅ Com seu volume de leads, você já pode automatizar até <strong>100% do seu atendimento para até 50 atendimentos por dia</strong> e <strong>80% para os que têm mais de 50 atendimentos por dia</strong>! Um chatbot super inteligente pode <strong>triplicar seu fechamento sem aumentar sua equipe</strong>.</p>
-        <p>Não só isso, vamos <strong>crescer suas vendas com estratégias de captação de leads, presença digital e autoridade de marca</strong>. Não somos apenas uma assessoria de publicidade: somos <strong>uma solução 360º</strong>. Este formulário, por exemplo, é uma estratégia real que podemos aplicar no seu negócio!</p>
-        <p>Seu negócio ainda está no manual. Isso significa que você está perdendo oportunidades diariamente por falta de estrutura escalável. A boa notícia: com a <strong>Tullu Digital</strong>, você pode virar o jogo.</p>
-      `;
-    }
-  </script>
-</body>
-</html>
+    <div class="
